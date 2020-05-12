@@ -1,20 +1,20 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
 
-import * as admin from 'firebase-admin';
-import * as firebase from "firebase/app";
+const admin = require('firebase-admin');
+import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
 import { firebaseConfig } from './config';
-var serviceAccount = require("./config/serviceAccountKey.json");
+const serviceAccount = require("./config/serviceAccountKey.json");
+
+firebase.initializeApp(firebaseConfig);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://backend-nodejs-ed79a.firebaseio.com"
 });
-
-firebase.initializeApp(firebaseConfig);
 
 const app = express();
 
@@ -34,4 +34,4 @@ app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
   console.log(`Escuchando desde el puerto ${process.env.PORT || 5000}!`);
 });
 
-module.exports = app;
+export default app;
