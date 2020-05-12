@@ -13,6 +13,6 @@ export default (app) => {
 
   // Products
   app.get('/products', getProducts);
-  app.post('/add-product', addProduct);
-  app.delete('/delete-product', deleteProduct);
+  app.post('/products', addProduct);
+  app.delete('/products', deleteProduct);
 }
