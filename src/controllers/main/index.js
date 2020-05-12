@@ -22,7 +22,7 @@ export async function getProducts(req, res) {
   }
 }
 
-export async function addProduct(req, res, next) {
+export async function addProduct(req, res) {
   try {
     const token = req.headers['access-token'];
     const { product } = req.body;
@@ -41,12 +41,55 @@ export async function addProduct(req, res, next) {
       const products = snapshot.docs.map(doc => doc.data());
       return res.json({
         test: true,
-        products
+        products,
+        message: `El producto ${product} fue agregado correctamente.`
       });
     } else {
       return res.status(401).json({
         status: false,
         message: product ? 'Tipo de dato para producto no permitido.' : 'No se envío el producto'
+      });
+    }
+  } catch (error) {
+    return res.status(401).json({
+      status: false,
+      message: error.message
+    });
+  }
+}
+
+export async function deleteProduct(req, res, next) {
+  try {
+    const token = req.headers['access-token'];
+    const { idProduct } = req.body;
+
+    // Verify session
+    await verifySession(token);
+
+    // Validate body
+    if (typeof idProduct === 'string' && idProduct.length > 0) {
+      // Remove product
+      const item = await firebase.firestore().collection('products').doc(idProduct).get();
+      if (item.exists) {
+        await firebase.firestore().collection('products').doc(idProduct).delete();
+        // Get All Products
+        const snapshot = await firebase.firestore().collection('products').get();
+        const products = snapshot.docs.map(doc => doc.data());
+        return res.json({
+          test: true,
+          products,
+          message: 'El producto fue eliminado correctamente.',
+        });
+      } else {
+        return res.status(401).json({
+          status: false,
+          message: 'El id del producto no existe'
+        });
+      }
+    } else {
+      return res.status(401).json({
+        status: false,
+        message: idProduct ? 'Tipo de dato para id producto no permitido.' : 'No se envío el id del producto'
       });
     }
   } catch (error) {

@@ -1,7 +1,8 @@
 import {
   registerEmail,
   getProducts,
-  addProduct
+  addProduct,
+  deleteProduct
 } from './controllers';
 
 export default (app) => {
@@ -15,5 +16,6 @@ export default (app) => {
   // Products
   app.get('/products', getProducts);
   app.post('/add-product', addProduct);
+  app.delete('/delete-product', deleteProduct);
   
 }
