@@ -20,7 +20,7 @@ export async function registerEmail(req, res, next) {
   }
   try {
     const resFirebase = await firebase.auth().createUserWithEmailAndPassword(email, password);
-    return res.status(201).json({
+    return res.status(200).json({
       status: true,
       message: '¡Usuario creado exitosamente!',
       user: resFirebase.user
@@ -47,7 +47,49 @@ export async function registerEmail(req, res, next) {
     }
     return res.status(401).json({
       status: false,
-      message: message
+      message
+    });
+  }
+}
+
+export async function loginEmail(req, res, next) {
+  const { email, password, id_onesignal } = req.body;
+  if (!email && !password && !id_onesignal) {
+    res.status(400).json({
+      status: false,
+      message: 'No se enviaron los parametros completos'
+    });
+    return next();
+  }
+
+  try {
+    const resFirebase = await firebase.auth().signInWithEmailAndPassword(email, password);
+    return res.status(200).json({
+      status: true,
+      message: '¡Login exitoso!',
+      user: resFirebase.user
+    });
+  } catch (error) {
+    let message = 'Ocurrió un error inesperado, por favor contacte al soporte técnico.';
+    switch (error.code) {
+      case 'auth/invalid-email':
+        message = 'Correo no válido.';
+        break;
+      case 'auth/user-disabled':
+        message = 'Esta cuenta ha sido deshabilitada.';
+        break;
+      case 'auth/user-not-found':
+        message = 'Usuario no encontrado.';
+        break;
+      case 'auth/wrong-password':
+        message = 'Contraseña incorrecta.';
+        break;
+      default:
+        message = 'Ocurrió un error inesperado, por favor contacte al soporte técnico.';
+    }
+    res.status(500).json({
+      status: false,
+      message
     });
   }
 }

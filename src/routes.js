@@ -1,5 +1,6 @@
 import {
   registerEmail,
+  loginEmail,
   getProducts,
   addProduct,
   deleteProduct
@@ -12,6 +13,7 @@ export default (app) => {
 
   // Register
   app.post('/auth/register', registerEmail);
+  app.post('/auth/login', loginEmail);
 
   // Products
   app.get('/products', getProducts);
