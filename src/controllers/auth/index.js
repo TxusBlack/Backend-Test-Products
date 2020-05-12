@@ -58,8 +58,8 @@ export async function registerEmail(req, res, next) {
 }
 
 export async function loginEmail(req, res, next) {
-  const { email, password, id_onesignal } = req.body;
-  if (!email && !password && !id_onesignal) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     res.status(400).json({
       status: false,
       message: 'No se enviaron los parametros completos'
@@ -97,7 +97,7 @@ export async function loginEmail(req, res, next) {
       default:
         message = 'Ocurrió un error inesperado, por favor contacte al soporte técnico.';
     }
-    res.status(500).json({
+    res.status(401).json({
       status: false,
       message
     });
