@@ -20,10 +20,15 @@ export async function registerEmail(req, res, next) {
   }
   try {
     const resFirebase = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const user = {
+      uid: resFirebase.user.uid,
+      email: resFirebase.user.email,
+      accessToken: await resFirebase.user.getIdToken()
+    }
     return res.status(200).json({
       status: true,
       message: '¡Usuario creado exitosamente!',
-      user: resFirebase.user
+      user
     });
   } catch (error) {
     let message = 'Ocurrió un error inesperado, por favor contacte al soporte técnico.';
@@ -64,10 +69,15 @@ export async function loginEmail(req, res, next) {
 
   try {
     const resFirebase = await firebase.auth().signInWithEmailAndPassword(email, password);
+    const user = {
+      uid: resFirebase.user.uid,
+      email: resFirebase.user.email,
+      accessToken: await resFirebase.user.getIdToken()
+    }
     return res.status(200).json({
       status: true,
       message: '¡Login exitoso!',
-      user: resFirebase.user
+      user
     });
   } catch (error) {
     let message = 'Ocurrió un error inesperado, por favor contacte al soporte técnico.';
