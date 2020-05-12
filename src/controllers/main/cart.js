@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-import { verifySession } from '../../middlewares';
+import { verifySession } from '../../utils';
 
 export async function getCart(req, res) {
   try {
