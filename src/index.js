@@ -6,14 +6,14 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-import { firebaseConfig } from './config';
+import { firebaseConfig, config } from './config';
 const serviceAccount = require("./config/serviceAccountKey.json");
 
 firebase.initializeApp(firebaseConfig);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://backend-nodejs-ed79a.firebaseio.com"
+  databaseURL: config.databaseURL
 });
 
 const app = express();
@@ -30,8 +30,8 @@ app.use((req, res, next) => {
 // File to manage routes
 require('./routes').default(app);
 
-app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
-  console.log(`Escuchando desde el puerto ${process.env.PORT || 5000}!`);
+app.listen(process.env.PORT || config.portDefault, '0.0.0.0', () => {
+  console.log(`Escuchando desde el puerto ${process.env.PORT || config.portDefault}!`);
 });
 
 export default app;
