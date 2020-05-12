@@ -9,11 +9,18 @@ export async function getCart(req, res) {
     const token = req.headers['access-token'];
     const user = await verifySession(token);
     const snapshot = await firebase.firestore().collection('cart').doc(user).get();
-    const products = snapshot.data().products;
-    return res.json({
-      status: true,
-      products
-    });
+    if (snapshot.exists) {
+      const products = snapshot.data().products;
+      return res.json({
+        status: true,
+        products
+      });
+    } else {
+      return res.json({
+        status: true,
+        products: []
+      });
+    }
   } catch (error) {
     return res.status(401).json({
       status: false,

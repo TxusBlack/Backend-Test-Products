@@ -9,11 +9,18 @@ export async function getProducts(req, res) {
     const token = req.headers['access-token'];
     await verifySession(token);
     const snapshot = await firebase.firestore().collection('products').get();
-    const products = snapshot.docs.map(doc => doc.data());
-    return res.json({
-      status: true,
-      products
-    });
+    if (snapshot.exists) {
+      const products = snapshot.docs.map(doc => doc.data());
+      return res.json({
+        status: true,
+        products
+      });
+    } else {
+      return res.json({
+        status: true,
+        products: []
+      });
+    }
   } catch (error) {
     return res.status(401).json({
       status: false,
