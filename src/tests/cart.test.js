@@ -110,7 +110,7 @@ test('DELETE /cart -> The product no exist', async t => {
     .send({ email: 'iam@diegomoreno.co', password: 'qwerty1234' });
   const res = await request(app)
     .delete(`/cart`)
-    .send({ idProduct: 'rXJrg6WyDYcXSo1tD13w' })
+    .send({ idProduct: '12341234' })
     .set({ 'access-token': user.body.user.accessToken });
   t.is(res.status, 401);
   t.is(res.body.status, false);
