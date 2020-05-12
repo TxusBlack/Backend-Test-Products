@@ -1,10 +1,13 @@
-// import { } from './controllers';
+import {
+  registerEmail
+} from './controllers';
 
 export default (app) => {
-  app.get('/', function(req, res) {
+  app.get('/', (req, res) => {
     res.send('hello world');
   });
 
   // Register
+  app.post('/auth/register', registerEmail);
   
 }

@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 require('./routes').default(app);
 
 app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
-  console.log('Escuchando desde el puerto 3000!');
+  console.log(`Escuchando desde el puerto ${process.env.PORT || 5000}!`);
 });
 
 module.exports = app;
