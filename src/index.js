@@ -1,13 +1,13 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
+import 'babel-polyfill';
 
 const admin = require('firebase-admin');
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-import { firebaseConfig, config } from './config';
-const serviceAccount = require("./config/serviceAccountKey.json");
+import { firebaseConfig, serviceAccount, config } from './config';
 
 firebase.initializeApp(firebaseConfig);
 
