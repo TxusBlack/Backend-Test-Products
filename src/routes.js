@@ -10,6 +10,11 @@ import {
 } from './controllers';
 
 export default (app) => {
+  // Home page
+  app.get('/', function(req, res) {
+    res.send('Backend online');
+  });
+
   // Register
   app.post('/auth/register', registerEmail);
   app.post('/auth/login', loginEmail);
