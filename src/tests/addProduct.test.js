@@ -29,11 +29,18 @@ test('POST /products -> OK Adding one product', async t => {
   const user = await request(app)
     .post(`/auth/login`)
     .send({ email: 'iam@diegomoreno.co', password: 'qwerty1234' });
-  const res = await request(app)
+  const product = `test${Math.floor(Math.random() * 10)}`;
+  const resAdd = await request(app)
     .post(`/products`)
-    .send({ product: `test${Math.floor(Math.random() * 10)}` })
+    .send({ product })
     .set({ 'access-token': user.body.user.accessToken });
-  t.is(res.status, 200);
-  t.is(res.body.status, true);
-  t.pass(res.body.products);
+  // Removing test
+  const id = resAdd.body.products.find(el => el.name === product);
+  await request(app)
+    .delete('/products')
+    .send({ idProduct: id.id })
+    .set({ 'access-token': user.body.user.accessToken });
+  t.is(resAdd.status, 200);
+  t.is(resAdd.body.status, true);
+  t.pass(resAdd.body.products);
 });
