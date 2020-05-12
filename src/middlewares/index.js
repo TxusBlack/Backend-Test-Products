@@ -3,11 +3,15 @@ import * as admin from 'firebase-admin';
 export function verifySession(access_token) {
   return new Promise(async (resolve, reject) => {
     try {
-      const user = await admin.auth().verifyIdToken(access_token);
-      resolve(user.uid);
+      if (access_token) {
+        const user = await admin.auth().verifyIdToken(access_token);
+        resolve(user.uid);
+      } else {
+        reject({ message: 'Falta enviar el token de la sesión' });
+      }
     } catch (error) {
       console.log('error in verifySession', error.code);
-      reject(error.message);
+      reject(error);
     }
   });
 }

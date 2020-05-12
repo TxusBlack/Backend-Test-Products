@@ -1,6 +1,7 @@
 import {
   registerEmail,
-  getProducts
+  getProducts,
+  addProduct
 } from './controllers';
 
 export default (app) => {
@@ -13,5 +14,6 @@ export default (app) => {
 
   // Products
   app.get('/products', getProducts);
+  app.post('/add-product', addProduct);
   
 }
