@@ -1,5 +1,6 @@
 import {
-  registerEmail
+  registerEmail,
+  getProducts
 } from './controllers';
 
 export default (app) => {
@@ -9,5 +10,8 @@ export default (app) => {
 
   // Register
   app.post('/auth/register', registerEmail);
+
+  // Products
+  app.get('/products', getProducts);
   
 }

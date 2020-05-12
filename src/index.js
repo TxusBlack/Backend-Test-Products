@@ -1,11 +1,18 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
 
+import * as admin from 'firebase-admin';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
 import { firebaseConfig } from './config';
+var serviceAccount = require("./config/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://backend-nodejs-ed79a.firebaseio.com"
+});
 
 firebase.initializeApp(firebaseConfig);
 

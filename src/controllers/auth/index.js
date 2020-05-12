@@ -1,7 +1,6 @@
 // Firebase
 import firebase from "firebase/app";
 import "firebase/auth";
-import "firebase/firestore";
 
 export async function registerEmail(req, res, next) {
   const { email, password } = req.body;
