@@ -11,7 +11,7 @@ export async function getProducts(req, res) {
     const snapshot = await firebase.firestore().collection('products').get();
     const products = snapshot.docs.map(doc => doc.data());
     return res.json({
-      test: true,
+      status: true,
       products
     });
   } catch (error) {
@@ -40,7 +40,7 @@ export async function addProduct(req, res) {
       const snapshot = await firebase.firestore().collection('products').get();
       const products = snapshot.docs.map(doc => doc.data());
       return res.json({
-        test: true,
+        status: true,
         products,
         message: `El producto ${product} fue agregado correctamente.`
       });
@@ -76,7 +76,7 @@ export async function deleteProduct(req, res, next) {
         const snapshot = await firebase.firestore().collection('products').get();
         const products = snapshot.docs.map(doc => doc.data());
         return res.json({
-          test: true,
+          status: true,
           products,
           message: 'El producto fue eliminado correctamente.',
         });

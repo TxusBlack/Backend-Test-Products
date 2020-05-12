@@ -57,7 +57,6 @@ test('POST /auth/login -> OK login with email', async t => {
   const res = await request(app)
     .post(`/auth/login`)
     .send({ email: 'iam@diegomoreno.co', password: 'qwerty1234' });
-    console.log(res.body.message);
   t.is(res.status, 200);
   t.is(res.body.status, true);
   t.is(res.body.message, '¡Login exitoso!');

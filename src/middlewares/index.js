@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+const admin = require('firebase-admin');
 
 export function verifySession(access_token) {
   return new Promise(async (resolve, reject) => {
